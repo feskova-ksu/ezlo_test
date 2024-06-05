@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModelProvider
 import com.example.ezlotest.di.AppComponent
+import com.example.ezlotest.di.AppModule
 import com.example.ezlotest.di.DaggerAppComponent
 import com.example.ezlotest.ui.theme.EzloTestTheme
 import javax.inject.Inject
@@ -28,7 +29,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        appComponent = DaggerAppComponent.builder().build()
+        appComponent = DaggerAppComponent.builder().appModule(AppModule(application)).build()
         appComponent.inject(this)
         mainViewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
         setContent {

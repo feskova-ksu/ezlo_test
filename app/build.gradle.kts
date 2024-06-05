@@ -76,4 +76,8 @@ dependencies {
     implementation(libs.dagger.support)
     kapt(libs.dagger.compiler)
     kapt(libs.dagger.processor)
+
+    implementation(libs.room.core)
+    implementation(libs.room.runtime)
+    kapt(libs.room.compiler)
 }
