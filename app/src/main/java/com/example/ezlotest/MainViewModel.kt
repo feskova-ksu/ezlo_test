@@ -7,6 +7,7 @@ import com.example.ezlotest.data.IDatabaseRepository
 import com.example.ezlotest.data.INetworkRepository
 import com.example.ezlotest.data.model.DevicePreview
 import com.example.ezlotest.data.model.mapToDevicePreview
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class MainViewModel @Inject constructor(
     private val network: INetworkRepository,
     private val database: IDatabaseRepository
@@ -28,6 +30,15 @@ class MainViewModel @Inject constructor(
     }
 
     var selectedPkDevice: Int? = null
+
+    fun reset() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _uiState.update {
+                it.copy(dialogVisible = true)
+            }
+            getAndSaveItems()
+        }
+    }
 
     fun onDeviceLongPress(pkDevice: Int) {
         selectedPkDevice = pkDevice
