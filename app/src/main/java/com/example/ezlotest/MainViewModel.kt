@@ -46,6 +46,7 @@ class MainViewModel @Inject constructor(
 
     private fun getAllDevicesFromDB() {
         viewModelScope.launch(Dispatchers.IO) {
+            _uiState.update { it.copy(isLoading = true) }
             database.getAllDevices().collect { devices ->
                 if (devices.isEmpty()) {
                     getAndSaveItems()
@@ -56,14 +57,10 @@ class MainViewModel @Inject constructor(
                     }
                 }
             }
-            database.getAllDevices().collect {
-                it.map { it.mapToDevicePreview() }
-            }
         }
     }
 
     private suspend fun getAndSaveItems() {
-        _uiState.update { it.copy(isLoading = true) }
         val res = network.getItems()
         Log.e("MainViewModel", "res = $res")
         database.saveAllItems(res)

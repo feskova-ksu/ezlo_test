@@ -33,7 +33,8 @@ import com.example.ezlotest.ui.theme.Typography
 @Composable
 fun DeviceItem(
     modifier: Modifier = Modifier,
-    device: DevicePreview
+    device: DevicePreview,
+    onEditClick: (Int) -> Unit = {}
 ) {
     Row(
         modifier = Modifier.then(modifier),
@@ -57,8 +58,7 @@ fun DeviceItem(
         }
         Column {
             Icon(
-                modifier = Modifier.clickable { //onEditClick
-                },
+                modifier = Modifier.clickable { onEditClick(device.pkDevice) },
                 imageVector = Icons.Default.Edit,
                 contentDescription = "Edit",
                 tint = Color.Gray
