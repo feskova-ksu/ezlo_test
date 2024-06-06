@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.ezlotest.di.AppComponent
 import com.example.ezlotest.di.AppModule
 import com.example.ezlotest.di.DaggerAppComponent
+import com.example.ezlotest.ui.MainScreen
 import com.example.ezlotest.ui.theme.EzloTestTheme
 import javax.inject.Inject
 
@@ -34,11 +35,8 @@ class MainActivity : ComponentActivity() {
         mainViewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
         setContent {
             EzloTestTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                Scaffold(modifier = Modifier.fillMaxSize()) {
+                    MainScreen(modifier = Modifier.padding(it),mainViewModel)
                 }
             }
         }

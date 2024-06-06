@@ -6,22 +6,23 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.ezlotest.data.model.DeviceItem
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DevicesDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveAllDevices(devices: List<DeviceItem>)
+    fun saveAllDevices(devices: List<DeviceItem>)
 
     @Query("SELECT * FROM DeviceDB")
-    suspend fun getAllDevices(): List<DeviceItem>
+    fun getAllDevices(): Flow<List<DeviceItem>>
 
     @Query("DELETE FROM DeviceDB  WHERE pkDevice = :pkDevice")
-    suspend fun deleteByPK(pkDevice: Int)
+    fun deleteByPK(pkDevice: Int)
 
     @Query("SELECT * FROM DeviceDB WHERE pkDevice = :pkDevice LIMIT 1")
-    suspend fun getDeviceByPK(pkDevice: Int): DeviceItem
+    fun getDeviceByPK(pkDevice: Int): Flow<DeviceItem>
 
     @Update
-    suspend fun updateObject(entity: DeviceItem)
+    fun updateObject(entity: DeviceItem)
 }

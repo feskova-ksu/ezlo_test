@@ -1,22 +1,26 @@
 package com.example.ezlotest.data.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
+import com.example.ezlotest.R
 import com.google.gson.Gson
 
 @Entity(tableName = "DeviceDB")
 data class DeviceItem(
     @PrimaryKey
     val pkDevice: Int,
+    @ColumnInfo(name = "title")
     val title: String,
+    @ColumnInfo(name = "deviceInfo")
     val deviceInfo: Device = Device()
 )
 
 data class DevicePreview(
     val pkDevice: Int,
     val title: String,
-    val platform:String
+    val imageId: Int
 )
 
 data class DeviceDetail(
@@ -24,7 +28,7 @@ data class DeviceDetail(
     val title: String,
     val macAddress: String,
     val firmware: String,
-    val platform: String
+    val imageId: Int
 )
 
 class Converters {
@@ -42,7 +46,7 @@ class Converters {
 fun DeviceItem.mapToDevicePreview() = DevicePreview(
     pkDevice = pkDevice,
     title = title,
-    platform = deviceInfo.platform
+    imageId = deviceInfo.platform.getImageFromPlatform()
 )
 
 fun DeviceItem.mapToDeviceDetail() = DeviceDetail(
@@ -50,5 +54,17 @@ fun DeviceItem.mapToDeviceDetail() = DeviceDetail(
     title = title,
     macAddress = deviceInfo.macAddress,
     firmware = deviceInfo.firmware,
-    platform = deviceInfo.platform
+    imageId = deviceInfo.platform.getImageFromPlatform()
 )
+
+fun String.getImageFromPlatform(): Int {
+   return when (this) {
+        "Sercomm G450" -> R.drawable.vera_plus_big
+        "Sercomm G550" -> R.drawable.vera_secure_big
+        "MiCasaVerde VeraLite" -> R.drawable.vera_edge_big
+        "Sercomm NA900" -> R.drawable.vera_edge_big
+        "Sercomm NA301" -> R.drawable.vera_edge_big
+        "Sercomm NA930" -> R.drawable.vera_edge_big
+        else -> R.drawable.vera_edge_big
+    }
+}
