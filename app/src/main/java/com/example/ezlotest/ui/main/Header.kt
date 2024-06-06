@@ -1,4 +1,4 @@
-package com.example.ezlotest.ui
+package com.example.ezlotest.ui.main
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

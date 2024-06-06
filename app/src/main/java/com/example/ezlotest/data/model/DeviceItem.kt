@@ -28,7 +28,8 @@ data class DeviceDetail(
     val title: String,
     val macAddress: String,
     val firmware: String,
-    val imageId: Int
+    val imageId: Int,
+    val model: String
 )
 
 class Converters {
@@ -54,11 +55,12 @@ fun DeviceItem.mapToDeviceDetail() = DeviceDetail(
     title = title,
     macAddress = deviceInfo.macAddress,
     firmware = deviceInfo.firmware,
-    imageId = deviceInfo.platform.getImageFromPlatform()
+    imageId = deviceInfo.platform.getImageFromPlatform(),
+    model = deviceInfo.platform.getModelFromPlatform()
 )
 
 fun String.getImageFromPlatform(): Int {
-   return when (this) {
+    return when (this) {
         "Sercomm G450" -> R.drawable.vera_plus_big
         "Sercomm G550" -> R.drawable.vera_secure_big
         "MiCasaVerde VeraLite" -> R.drawable.vera_edge_big
@@ -66,5 +68,17 @@ fun String.getImageFromPlatform(): Int {
         "Sercomm NA301" -> R.drawable.vera_edge_big
         "Sercomm NA930" -> R.drawable.vera_edge_big
         else -> R.drawable.vera_edge_big
+    }
+}
+
+fun String.getModelFromPlatform(): String {
+    return when (this) {
+        "Sercomm G450" -> "Vera Plus"
+        "Sercomm G550" -> "Vera Secure"
+        "MiCasaVerde VeraLite" -> "Vera Edge"
+        "Sercomm NA900" -> "Vera Edge"
+        "Sercomm NA301" -> "Vera Edge"
+        "Sercomm NA930" -> "Vera Edge"
+        else -> "Vera Edge"
     }
 }

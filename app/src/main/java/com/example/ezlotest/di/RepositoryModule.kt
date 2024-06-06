@@ -8,13 +8,17 @@ import com.example.ezlotest.data.NetworkRepository
 import com.example.ezlotest.data.db.DevicesDB
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
 @Module
+@InstallIn(SingletonComponent::class)
 class RepositoryModule {
     @Provides
     fun provideNetworkRepository(apiService: ApiService): INetworkRepository {
         return NetworkRepository(apiService)
     }
+
     @Provides
     fun provideDatabaseRepository(database: DevicesDB): IDatabaseRepository {
         return DatabaseRepository(database)
