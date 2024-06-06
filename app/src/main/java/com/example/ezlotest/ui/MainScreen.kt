@@ -25,14 +25,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.ezlotest.MainViewModel
 import com.example.ezlotest.R
 import com.example.ezlotest.data.model.DevicePreview
 import com.example.ezlotest.ui.theme.EzloTestTheme
 import com.example.ezlotest.ui.theme.Purple80
 
+const val MAIN = "main"
 @Composable
-fun MainScreen(modifier: Modifier = Modifier, viewModel: MainViewModel) {
+fun MainScreen(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    viewModel: MainViewModel
+) {
 
     val uiState by viewModel.uiState.collectAsState()
     var shouldShowDialog by remember { (mutableStateOf(false)) }
@@ -45,7 +51,7 @@ fun MainScreen(modifier: Modifier = Modifier, viewModel: MainViewModel) {
         if (shouldShowDialog) {
             AlertDialog(
                 onDismissRequest = { shouldShowDialog = false },
-                title = { Text(text = "Alert Dialog") },
+                title = { Text(text = "Delete device") },
                 text = { Text(text = "Do you really want to delete this device?\nSN:${viewModel.selectedPkDevice}") },
                 confirmButton = {
                     Button(
@@ -65,7 +71,7 @@ fun MainScreen(modifier: Modifier = Modifier, viewModel: MainViewModel) {
                         onClick = { shouldShowDialog = false }
                     ) {
                         Text(
-                            text = "Cansel",
+                            text = "Cancel",
                             color = Color.White
                         )
                     }
@@ -81,11 +87,13 @@ fun MainScreen(modifier: Modifier = Modifier, viewModel: MainViewModel) {
             )
         } else {
             ListOfDevices(devices = uiState.devices, onDeviceSelect = {
-                //add nav controller and go to details fragment
+                navController.navigate("$DETAILS/$it/${false}")
             },
                 onDeviceLongPress = {
                     viewModel.onDeviceLongPress(it)
                     shouldShowDialog = true
+                }, onEditClick = {
+                    navController.navigate("$DETAILS/$it/${true}")
                 })
         }
     }
@@ -98,7 +106,8 @@ fun MainScreen(modifier: Modifier = Modifier, viewModel: MainViewModel) {
 fun ListOfDevices(
     devices: List<DevicePreview>,
     onDeviceSelect: (Int) -> Unit = {},
-    onDeviceLongPress: (Int) -> Unit = {}
+    onDeviceLongPress: (Int) -> Unit = {},
+    onEditClick: (Int) -> Unit = {},
 ) {
     LazyColumn(contentPadding = PaddingValues(vertical = 8.dp)) {
         items(items = devices) {
@@ -108,7 +117,7 @@ fun ListOfDevices(
                     .combinedClickable(
                         onClick = { onDeviceSelect(it.pkDevice) },
                         onLongClick = { onDeviceLongPress(it.pkDevice) },
-                    ), device = it
+                    ), device = it, onEditClick = onEditClick
             )
             Divider(color = Color.LightGray, thickness = 3.dp)
         }

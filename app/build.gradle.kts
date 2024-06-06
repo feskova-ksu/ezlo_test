@@ -86,4 +86,6 @@ dependencies {
     implementation(libs.room.core)
     implementation(libs.room.runtime)
     kapt(libs.room.compiler)
+
+    implementation(libs.navigation.compose)
 }
