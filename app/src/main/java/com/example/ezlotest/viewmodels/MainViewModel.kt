@@ -1,12 +1,11 @@
-package com.example.ezlotest
+package com.example.ezlotest.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ezlotest.data.IDatabaseRepository
 import com.example.ezlotest.data.INetworkRepository
-import com.example.ezlotest.data.model.DevicePreview
-import com.example.ezlotest.data.model.mapToDevicePreview
+import com.example.ezlotest.ui.model.DevicePreview
+import com.example.ezlotest.utils.mapToDevicePreview
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -73,15 +72,12 @@ class MainViewModel @Inject constructor(
 
     private suspend fun getAndSaveItems() {
         val res = network.getItems()
-        Log.e("MainViewModel", "res = $res")
         database.saveAllItems(res)
     }
 }
 
 
 data class MainUIState(
-    val name: String = "",
-    val profileImage: Int = R.drawable.ic_launcher_background,
     val devices: List<DevicePreview> = emptyList(),
     val isLoading: Boolean = false,
     val dialogVisible: Boolean = false

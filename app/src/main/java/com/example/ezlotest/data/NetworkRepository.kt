@@ -1,7 +1,7 @@
 package com.example.ezlotest.data
 
 import com.example.ezlotest.data.model.DeviceItem
-import com.example.ezlotest.data.model.mapForDB
+import com.example.ezlotest.utils.mapForDB
 import javax.inject.Inject
 
 interface INetworkRepository {

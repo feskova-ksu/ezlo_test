@@ -9,7 +9,7 @@ interface IDatabaseRepository {
     suspend fun saveAllItems(items: List<DeviceItem>)
     suspend fun getAllDevices(): Flow<List<DeviceItem>>
     suspend fun deleteByPK(pkDevice: Int)
-    suspend fun getDevice(pk: Int): Flow<DeviceItem>
+    suspend fun getDevice(pk: Int): DeviceItem
     suspend fun updateObject(entity: DeviceItem)
 }
 
@@ -29,7 +29,7 @@ class DatabaseRepository @Inject constructor(database: DevicesDB) :
         dao.deleteByPK(pkDevice)
     }
 
-    override suspend fun getDevice(pk: Int): Flow<DeviceItem> {
+    override suspend fun getDevice(pk: Int): DeviceItem {
         return dao.getDeviceByPK(pk)
     }
 

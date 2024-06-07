@@ -26,10 +26,3 @@ data class Device(
     @SerializedName("Platform")
     val platform: String = "",
 )
-fun Device.mapForDB(number:Int) = DeviceItem(
-    pkDevice = this.pkDevice,
-    title = "$TITLE_PREFIX $number",
-    deviceInfo = this
-)
-
-const val TITLE_PREFIX ="Home Number"

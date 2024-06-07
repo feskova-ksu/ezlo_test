@@ -21,7 +21,7 @@ interface DevicesDAO {
     fun deleteByPK(pkDevice: Int)
 
     @Query("SELECT * FROM DeviceDB WHERE pkDevice = :pkDevice LIMIT 1")
-    fun getDeviceByPK(pkDevice: Int): Flow<DeviceItem>
+    fun getDeviceByPK(pkDevice: Int): DeviceItem
 
     @Update
     fun updateObject(entity: DeviceItem)
