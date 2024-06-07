@@ -17,11 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.ezlotest.R
-import com.example.ezlotest.data.model.DeviceDetail
+import com.example.ezlotest.ui.model.DeviceDetail
 import com.example.ezlotest.ui.theme.EzloTestTheme
 import com.example.ezlotest.ui.theme.Typography
 
@@ -36,7 +37,7 @@ fun DeviceInformation(modifier: Modifier = Modifier, deviceItem: DeviceDetail) {
 
 @Composable
 fun RowWithImageAndText(device: DeviceDetail) {
-    Row (verticalAlignment = Alignment.CenterVertically){
+    Row(verticalAlignment = Alignment.CenterVertically) {
         Image(
             modifier = Modifier
                 .clip(RoundedCornerShape(12.dp))
@@ -57,11 +58,26 @@ fun RowWithImageAndText(device: DeviceDetail) {
 @Composable
 fun StaticDeviceInfo(deviceItem: DeviceDetail) {
     Column {
-        Text(text = "SN:${deviceItem.pkDevice}", style = Typography.titleLarge, color = Color.Gray)
-        Text(text = "MAC Address:${deviceItem.macAddress}", style = Typography.titleLarge, color = Color.Gray)
+        Text(
+            text = stringResource(id = R.string.sn_info, "${deviceItem.pkDevice}"),
+            style = Typography.titleLarge,
+            color = Color.Gray
+        )
+        Text(
+            text = stringResource(id = R.string.mac_address_info, deviceItem.macAddress),
+            style = Typography.titleLarge,
+            color = Color.Gray
+        )
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "Firmware:${deviceItem.firmware}", style = Typography.titleLarge, color = Color.Gray)
-        Text(text = "Model:${deviceItem.model}", style = Typography.titleLarge, color = Color.Gray)
+        Text(
+            text = stringResource(id = R.string.firmware_info, deviceItem.firmware),
+            style = Typography.titleLarge,
+            color = Color.Gray
+        )
+        Text(
+            text = stringResource(id = R.string.model_info, deviceItem.model),
+            style = Typography.titleLarge, color = Color.Gray
+        )
     }
 }
 

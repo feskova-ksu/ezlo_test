@@ -32,13 +32,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.ezlotest.R
-import com.example.ezlotest.data.model.DeviceDetail
+import com.example.ezlotest.ui.model.DeviceDetail
 import com.example.ezlotest.ui.theme.EzloTestTheme
 import com.example.ezlotest.ui.theme.Typography
 
@@ -61,7 +62,10 @@ fun DeviceInfoEdit(
                 onEdit(text)
             }
         ) {
-            Text(text = if (deviceItem.title == text) "Back" else "Save")
+            Text(
+                text = if (deviceItem.title == text) stringResource(id = R.string.back)
+                else stringResource(id = R.string.save)
+            )
         }
     }
 }

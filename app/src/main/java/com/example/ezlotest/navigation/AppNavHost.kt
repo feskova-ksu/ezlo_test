@@ -7,8 +7,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.ezlotest.DetailsViewModel
-import com.example.ezlotest.MainViewModel
+import com.example.ezlotest.viewmodels.DetailsViewModel
+import com.example.ezlotest.viewmodels.MainViewModel
 import com.example.ezlotest.ui.details.DETAILS
 import com.example.ezlotest.ui.details.DEVICE_ID
 import com.example.ezlotest.ui.details.DetailsScreen

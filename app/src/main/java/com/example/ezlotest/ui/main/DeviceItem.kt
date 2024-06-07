@@ -27,7 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.ezlotest.R
-import com.example.ezlotest.data.model.DevicePreview
+import com.example.ezlotest.ui.model.DevicePreview
 import com.example.ezlotest.ui.theme.EzloTestTheme
 import com.example.ezlotest.ui.theme.Typography
 
@@ -82,7 +82,7 @@ fun DeviceItemPreview() {
         Surface {
             DeviceItem(
                 modifier = Modifier.padding(8.dp),
-                device = DevicePreview(1233434, "Super machina", R.drawable.ic_launcher_background)
+                device = DevicePreview(1233434, "Super machina", R.drawable.vera_edge_big)
             )
         }
     }

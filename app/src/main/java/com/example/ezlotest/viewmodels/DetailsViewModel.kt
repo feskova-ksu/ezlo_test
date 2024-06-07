@@ -1,11 +1,10 @@
-package com.example.ezlotest
+package com.example.ezlotest.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ezlotest.data.IDatabaseRepository
-import com.example.ezlotest.data.model.DeviceDetail
-import com.example.ezlotest.data.model.mapToDeviceDetail
+import com.example.ezlotest.ui.model.DeviceDetail
+import com.example.ezlotest.utils.mapToDeviceDetail
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -14,7 +13,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -39,11 +37,10 @@ class DetailsViewModel @AssistedInject constructor(
         } else
             viewModelScope.launch(Dispatchers.IO) {
                 uiState.value.device?.let {
-                    database.getDevice(it.pkDevice).collect {
-                        database.updateObject(it.copy(title = newTitle))
-                        _uiState.update {
-                            it.copy(canGoBack = true)
-                        }
+                    val old = database.getDevice(it.pkDevice)
+                    database.updateObject(old.copy(title = newTitle))
+                    _uiState.update { state ->
+                        state.copy(canGoBack = true)
                     }
                 }
             }
@@ -54,8 +51,7 @@ class DetailsViewModel @AssistedInject constructor(
             _uiState.update {
                 it.copy(isLoading = true)
             }
-            val device = database.getDevice(deviceId).first()
-            Log.e("getData", "Res = $device")
+            val device = database.getDevice(deviceId)
             val info = device.mapToDeviceDetail()
             _uiState.update {
                 it.copy(device = info, isLoading = false)
